@@ -55,14 +55,14 @@ int main()
             cipher(userChoice);
             returnToMenu(timesUsed);
             break;
-        case 3:
+        case 3: // THESE ARE THE CREDITS
             system("cls");
             credits(timesUsed);
             break;
-        case 4:
+        case 4: // PROGRAM QUIT
             system("cls");
-            cout << QUIT_1 << endl << endl;
             timesUsed_msg(timesUsed);
+            cout << endl << QUIT_1 << endl;
             system("pause");
             exit(0);
         }
@@ -182,8 +182,8 @@ char returnToMenu(int& timesUsed)
         if (userChoice == 'N') 
         {
             system("cls");
-            cout << QUIT_1 << endl << endl;
             timesUsed_msg(timesUsed);
+            cout << endl << QUIT_1 << endl;
             system("pause");
             exit(0);
         }
