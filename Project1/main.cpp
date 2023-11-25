@@ -1,3 +1,10 @@
+// TEAM WAFFLES
+// (NAMES GO HERE)
+// 
+// Case 3: Vigenere Cipher Decryption
+// Started: 11/25/2023
+// Ended: (DATE GOES HERE)
+
 #include <iostream>
 #include <string>
 using namespace std;
