@@ -21,6 +21,8 @@ void timesUsed_msg(int&);
 bool isValid(int, int, int);
 void cipher(int);
 char returnToMenu(int&);
+static void cinStuff();
+
 
 int main()
 {
@@ -42,16 +44,14 @@ int main()
         case 1: // THIS CASE SHOULD ENCRYPT
             system("cls");
             timesUsed++;
-            cin.clear();
-            cin.ignore();
+            cinStuff();
             cipher(userChoice);
             returnToMenu(timesUsed);
             break;
         case 2: // THIS CASE SHOULD DECRYPT
             system("cls");
             timesUsed++;
-            cin.clear();
-            cin.ignore();
+            cinStuff();
             cipher(userChoice);
             returnToMenu(timesUsed);
             break;
@@ -92,8 +92,7 @@ int displayMenu(int& timesUsed)
             system("cls");
             titleScreen(timesUsed);
             cout << INVALID_ANSWER << endl;
-            cin.clear();
-            cin.ignore();
+            cinStuff();
             cout << "User Choice: ";
         }
 
@@ -199,9 +198,9 @@ char returnToMenu(int& timesUsed)
     return userChoice;
 }
 
-//////////////////////////////////////////
+/////////////////////////////////
 // ENCRYPT & DECRYPT FUNCTIONS //
-/////////////////////////////////////////
+/////////////////////////////////
  void cipher(int userChoice)
 {
      // Variables
@@ -252,4 +251,17 @@ char returnToMenu(int& timesUsed)
     cout << "Your keyword was: \"" << key << "\"" << endl;
     cout << "Your ciphered text: \"" << ciphered << "\"" << endl;
     cout << "===========================================" << endl;
+}
+
+////////////////
+// misc funcs //
+////////////////
+
+// Just to reduce like a couple of lines LOL
+// This clears the cin input
+// As well as ignoring any previous cin inputs
+static void cinStuff()
+{
+    cin.clear();
+    cin.ignore();
 }
