@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <string>
+#include <algorithm>
 using namespace std;
 
 // Global
@@ -44,6 +45,7 @@ string decryptVigenere(const string& ciphered, const string& key) {
 
     return decrypted;
 }
+
 // Prototypes
 int displayMenu(int&);
 void titleScreen(int&);
@@ -247,35 +249,38 @@ void cipher(int userChoice) {
     }
 
     // Text Input
-    cout << "Input Text - Limit 25 Characters\nInput: ";
+    cout << "Input Text - Limit 50 Characters\nInput: ";
     getline(cin, plain);
-    cout << "\nKeyword - Limit 25 Characters\nInput: ";
+    transform(plain.begin(), plain.end(), plain.begin(), ::toupper); // THIS CAPITALIZES THE LETTERS
+    cout << "\nKeyword - Limit 50 Characters\nInput: ";
     getline(cin, key);
+    transform(key.begin(), key.end(), key.begin(), ::toupper); // THIS CAPITALIZES THE LETTERS
 
     // Length Checking
-    if (plain.length() > 25)
-        cout << "Plain Text Input exceeded 25 characters. Please try again." << endl;
-    else if (key.length() > 25)
-        cout << "Keyword Input exceeded 25 characters. Please try again." << endl;
+    if (plain.length() > 50)
+        cout << "Plain Text Input exceeded 50 characters. Please try again." << endl;
+    else if (key.length() > 50)
+        cout << "Keyword Input exceeded 50 characters. Please try again." << endl;
 
-// Encryption or Decryption
-if (userChoice == 1) {
-    cout << "\nENCRYPTING!!" << endl;
-    // Call the function for encryption
-    result = encryptVigenere(plain, key);
-}
-else if (userChoice == 2) {
-    cout << "\nDECRYPTING!!" << endl;
-    // Call the function for decryption
-    result = decryptVigenere(result, key);  // Use 'result' instead of 'plain' in decryption
-}
+    // Encryption or Decryption
+    if (userChoice == 1) {
+        cout << "\nENCRYPTING!!" << endl;
+        // Call the function for encryption
+        result = encryptVigenere(plain, key);
+    }
+    else if (userChoice == 2) {
+        cout << "\nDECRYPTING!!" << endl;
+        // Call the function for decryption
+        result = decryptVigenere(result, key);  // Use 'result' instead of 'plain' in decryption
+    }
 
-// Output
-cout << "===========================================" << endl;
-cout << "Your plain text was: \"" << plain << "\"" << endl;
-cout << "Your keyword was: \"" << key << "\"" << endl;
-cout << "Your ciphered text: \"" << result << "\"" << endl;  // Use 'result' here
-cout << "===========================================" << endl;
+    // Output
+    cout << "===========================================" << endl;
+    cout << "Your plain text was: \"" << plain << "\"" << endl;
+    cout << "Your keyword was: \"" << key << "\"" << endl;
+    cout << "Your ciphered text: \"" << result << "\"" << endl;  // Use 'result' here
+    cout << "===========================================" << endl;
+}
 
 ////////////////
 // misc funcs //
