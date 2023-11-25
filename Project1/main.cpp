@@ -13,6 +13,37 @@ using namespace std;
 const string QUIT_1 = "Thank you for using this program!";
 const string INVALID_ANSWER = "Please input a number!";
 
+// Encryption Function
+string encryptVigenere(const string& plain, const string& key) {
+    string ciphered;
+    int keyLength = key.length();
+
+    for (size_t i = 0; i < plain.length(); ++i) {
+        char plainChar = plain[i];
+        char keyChar = key[i % keyLength];
+        char encryptedChar = (plainChar + keyChar) % 26 + 'A';  // Assuming uppercase letters
+
+        ciphered += encryptedChar;
+    }
+
+    return ciphered;
+}
+
+// Decryption Function
+string decryptVigenere(const string& ciphered, const string& key) {
+    string decrypted;
+    int keyLength = key.length();
+
+    for (size_t i = 0; i < ciphered.length(); ++i) {
+        char cipheredChar = ciphered[i];
+        char keyChar = key[i % keyLength];
+        char decryptedChar = (cipheredChar - keyChar + 26) % 26 + 'A';  // Assuming uppercase letters
+
+        decrypted += decryptedChar;
+    }
+
+    return decrypted;
+}
 // Prototypes
 int displayMenu(int&);
 void titleScreen(int&);
@@ -201,43 +232,25 @@ char returnToMenu(int& timesUsed)
 /////////////////////////////////
 // ENCRYPT & DECRYPT FUNCTIONS //
 /////////////////////////////////
- void cipher(int userChoice)
-{
-     // Variables
-     string plain, key, ciphered;
+void cipher(int userChoice) {
+    // Variables
+    string plain, key, result;
 
-     // This determines the title for the cipher option
-     if (userChoice == 1)
-     {
-         cout << "Vigenere Cipher Project - Encrypting Text" << endl;
-         cout << "-------------------------------------------" << endl;
-     }
-     else if (userChoice == 2)
-     {
-         cout << "Vigenere Cipher Project - Decrypting Text" << endl;
-         cout << "-------------------------------------------" << endl;
-     }
+    // This determines the title for the cipher option
+    if (userChoice == 1) {
+        cout << "Vigenere Cipher Project - Encrypting Text" << endl;
+        cout << "-------------------------------------------" << endl;
+    }
+    else if (userChoice == 2) {
+        cout << "Vigenere Cipher Project - Decrypting Text" << endl;
+        cout << "-------------------------------------------" << endl;
+    }
 
     // Text Input
-    cout << "Plain Text - Limit 25 Characters\nInput: ";
+    cout << "Input Text - Limit 25 Characters\nInput: ";
     getline(cin, plain);
     cout << "\nKeyword - Limit 25 Characters\nInput: ";
     getline(cin, key);
-    // ciphered = "TEST";
-
-    /* User choice option so we function lines.
-       The "couts" are for testing purposes.
-       unless you want to keep the "couts" because its funny lol */
-    if (userChoice == 1)
-    {
-        cout << "\nENCRYPTING!!" << endl;
-        // the function for encrpytion should go here
-    }
-    else if (userChoice == 2)
-    {
-        cout << "\nDECRYPTING!!" << endl;
-        // the function for decryption should go here
-    }
 
     // Length Checking
     if (plain.length() > 25)
@@ -245,13 +258,24 @@ char returnToMenu(int& timesUsed)
     else if (key.length() > 25)
         cout << "Keyword Input exceeded 25 characters. Please try again." << endl;
 
-    // Output
-    cout << "===========================================" << endl;
-    cout << "Your plain text was: \"" << plain << "\"" << endl;
-    cout << "Your keyword was: \"" << key << "\"" << endl;
-    cout << "Your ciphered text: \"" << ciphered << "\"" << endl;
-    cout << "===========================================" << endl;
+// Encryption or Decryption
+if (userChoice == 1) {
+    cout << "\nENCRYPTING!!" << endl;
+    // Call the function for encryption
+    result = encryptVigenere(plain, key);
 }
+else if (userChoice == 2) {
+    cout << "\nDECRYPTING!!" << endl;
+    // Call the function for decryption
+    result = decryptVigenere(result, key);  // Use 'result' instead of 'plain' in decryption
+}
+
+// Output
+cout << "===========================================" << endl;
+cout << "Your plain text was: \"" << plain << "\"" << endl;
+cout << "Your keyword was: \"" << key << "\"" << endl;
+cout << "Your ciphered text: \"" << result << "\"" << endl;  // Use 'result' here
+cout << "===========================================" << endl;
 
 ////////////////
 // misc funcs //
