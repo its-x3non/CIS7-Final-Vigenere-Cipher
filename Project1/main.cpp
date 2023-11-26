@@ -14,47 +14,19 @@ using namespace std;
 const string QUIT_1 = "Thank you for using this program!";
 const string INVALID_ANSWER = "Please input a number!";
 
-// Encryption Function
-string encryptVigenere(const string& plain, const string& key) {
-    string ciphered;
-    int keyLength = key.length();
-
-    for (size_t i = 0; i < plain.length(); ++i) {
-        char plainChar = plain[i];
-        char keyChar = key[i % keyLength];
-        char encryptedChar = (plainChar + keyChar) % 26 + 'A';  // Assuming uppercase letters
-
-        ciphered += encryptedChar;
-    }
-
-    return ciphered;
-}
-
-// Decryption Function
-string decryptVigenere(const string& ciphered, const string& key) {
-    string decrypted;
-    int keyLength = key.length();
-
-    for (size_t i = 0; i < ciphered.length(); ++i) {
-        char cipheredChar = ciphered[i];
-        char keyChar = key[i % keyLength];
-        char decryptedChar = (cipheredChar - keyChar + 26) % 26 + 'A';  // Assuming uppercase letters
-
-        decrypted += decryptedChar;
-    }
-
-    return decrypted;
-}
-
 // Prototypes
 int displayMenu(int&);
 void titleScreen(int&);
 void credits(int&);
 void timesUsed_msg(int&);
 bool isValid(int, int, int);
-void cipher(int);
 char returnToMenu(int&);
 static void cinStuff();
+
+// ENCRYPT & DECRYPT FUNCTIONS
+string encryptVigenere(const string&, const string&);
+string decryptVigenere(const string&, const string&);
+void cipher(int);
 
 
 int main()
@@ -234,6 +206,40 @@ char returnToMenu(int& timesUsed)
 /////////////////////////////////
 // ENCRYPT & DECRYPT FUNCTIONS //
 /////////////////////////////////
+
+// Encryption Function
+string encryptVigenere(const string& plain, const string& key) {
+    string ciphered;
+    int keyLength = key.length();
+
+    for (size_t i = 0; i < plain.length(); ++i) {
+        char plainChar = plain[i];
+        char keyChar = key[i % keyLength];
+        char encryptedChar = (plainChar + keyChar) % 26 + 'A';  // Assuming uppercase letters
+
+        ciphered += encryptedChar;
+    }
+
+    return ciphered;
+}
+
+// Decryption Function
+string decryptVigenere(const string& ciphered, const string& key) {
+    string decrypted;
+    int keyLength = key.length();
+
+    for (size_t i = 0; i < ciphered.length(); ++i) {
+        char cipheredChar = ciphered[i];
+        char keyChar = key[i % keyLength];
+        char decryptedChar = (cipheredChar - keyChar + 26) % 26 + 'A';  // Assuming uppercase letters
+
+        decrypted += decryptedChar;
+    }
+
+    return decrypted;
+}
+
+// DISPLAYS CIPHER + USES THE DECRYPT & ENCRYPT FUNCTION IN ONE FUNCTION
 void cipher(int userChoice) {
     // Variables
     string plain, key, result;
