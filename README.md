@@ -27,7 +27,7 @@ decrypts a message from the user.
 how we approached this program should go here
 
 ## How To Use
-1) After running the program, you greeted with 4 options (in order): Encrypt, Decrypt, Credits, and Quit
+1) After running the program, you're greeted with 4 options (in order): Encrypt, Decrypt, Credits, and Quit
 2) If you would like to encrypt, type 1 then press enter:
    1) Type in what word you would like to decrpyt (No Spaces)
    2) Type in the keyword
@@ -37,6 +37,7 @@ how we approached this program should go here
      - If you haven't already encrypted something, it'll ask you to encrypt something first
      - If you don't want to use previous input, it'll ask you to input something
          - Steps are like encrypting so no need to repeat
+   2) If you have encrypted something already, it'll use your previous input
 4) If you want to see the credits, type 3 then press enter
 5) If you would like to stop using the program, type 4 then press enter
 
