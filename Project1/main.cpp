@@ -1,13 +1,14 @@
 // TEAM WAFFLES
-// (NAMES GO HERE)
-// 
+// Xenon Garcia
+// Daelon Ruidsel
+// -------------------------------------
 // Case 3: Vigenere Cipher Decryption
 // Started: 11/25/2023
-// Ended: (DATE GOES HERE)
+// Ended: 12/3/2023
 
+#include <algorithm>
 #include <iostream>
 #include <string>
-#include <algorithm>
 using namespace std;
 
 // Global
@@ -22,43 +23,143 @@ void timesUsed_msg(int&);
 bool isValid(int, int, int);
 char returnToMenu(int&);
 static void cinStuff();
+bool lengthCheck(string, string);
 
 // ENCRYPT & DECRYPT FUNCTIONS
 string encryptVigenere(const string&, const string&);
 string decryptVigenere(const string&, const string&);
-void cipher(int);
+string cipher(int, string, string);
 
-
-int main()
-{
+int main() {
     // variables
     int timesUsed = 0;
     int userChoice;
     bool useAgain = false;
+    char useCurrent;
+    string plain, key, result;
 
     // LOOP
-    while (useAgain == false)
-    {
+    while (useAgain == false) {
         // MENU DISPLAY
         system("cls");
+
+        // For Testing
+        /*cout << "plain: " << plain << endl;
+        cout << "key: " << key << endl;
+        cout << "result: " << result << endl;*/
+
         userChoice = displayMenu(timesUsed);
 
         // SWITCH CASE
-        switch (userChoice)
-        {
+        switch (userChoice) {
         case 1: // THIS CASE SHOULD ENCRYPT
             system("cls");
             timesUsed++;
             cinStuff();
-            cipher(userChoice);
+
+            cout << "Vigenere Cipher Project - Encrypting Text" << endl;
+            cout << "-------------------------------------------" << endl;
+
+            // Text Input
+            cout << "Input Text - Limit 50 Characters\nInput: ";
+            getline(cin, plain);
+            transform(plain.begin(), plain.end(), plain.begin(), ::toupper); // THIS CAPITALIZES THE LETTERS
+
+            // Key Input
+            cout << "\nKeyword - Limit 50 Characters\nInput: ";
+            getline(cin, key);
+            transform(key.begin(), key.end(), key.begin(), ::toupper); // THIS CAPITALIZES THE LETTERS
+
+            // Length Checking Function
+            if (lengthCheck(plain, key) == true) // If either are true, reset both plain & key inputs
+            {
+                plain = "";
+                key = "";
+                break;
+            }
+
+            // Result Output
+            result = cipher(userChoice, plain, key);
             returnToMenu(timesUsed);
             break;
         case 2: // THIS CASE SHOULD DECRYPT
             system("cls");
             timesUsed++;
             cinStuff();
-            cipher(userChoice);
-            returnToMenu(timesUsed);
+
+            // Setup a "do" loop for incorrect input until correct input
+            do {
+                // TITLE
+                cout << "Vigenere Cipher Project - Decrypting Text" << endl;
+                cout << "-------------------------------------------" << endl;
+
+                // Ask user if want to use previous input
+                cout << "Want to previous input? (Y/N)" << endl;
+                cout << "User Choice: ";
+                cin >> useCurrent;
+                useCurrent = toupper(useCurrent);
+
+                // If Yes
+                if (useCurrent == 'Y') {
+                    // If user decides to decrypt something
+                    // without a previous input, tell user to
+                    // encrypt something first and bring them
+                    // back to the main menu
+                    // otherwise continue
+                    if (plain.empty() || key.empty()) {
+                        cout << "\nNothing Exists!" << endl;
+                        cout << "Please encrypt something first :)" << endl;
+                    }
+                    else {
+                        cout << endl << "Using Previous Input!" << endl;
+                        plain = result;
+                    }
+                }
+
+                // If user doesn't want to use previous input
+                if (useCurrent == 'N') {
+                    cinStuff();
+
+                    // Text Input
+                    cout << "\nInput Text - Limit 50 Characters\nInput: ";
+                    getline(cin, plain);
+                    transform(plain.begin(), plain.end(), plain.begin(), ::toupper); // THIS CAPITALIZES THE LETTERS
+
+                    // Key Input
+                    cout << "\nKeyword - Limit 50 Characters\nInput: ";
+                    getline(cin, key);
+                    transform(key.begin(), key.end(), key.begin(), ::toupper); // THIS CAPITALIZES THE LETTERS
+
+                    // Length Checking Function
+                    if (lengthCheck(plain, key) == true) // If either are true, reset both plain & key inputs
+                    {
+                        plain = "";
+                        key = "";
+                        break;
+                    }
+                }
+
+                // If it's not YES (y) or NO (n)
+                if (useCurrent != 'Y' && useCurrent != 'N') {
+                    system("cls");
+                    cout << "Please make a proper choice." << endl;
+                }
+            } while (useCurrent != 'Y' && useCurrent != 'N');
+
+            // Output
+            if (!(plain.empty() || key.empty())) {
+                result = cipher(userChoice, plain, key);
+                cout << "Returning after this resets everything!" << endl;
+                returnToMenu(timesUsed);
+
+                // Reset Everything
+                plain = "";
+                key = "";
+                result = "";
+            }
+            else
+                returnToMenu(timesUsed);
+
             break;
         case 3: // THESE ARE THE CREDITS
             system("cls");
@@ -79,21 +180,18 @@ int main()
 /////////////////
 
 // Displays the Menu
-int displayMenu(int& timesUsed)
-{
+int displayMenu(int& timesUsed) {
     int min = 1;
     int max = 4;
     int userChoice = 0;
 
     // Setup a "do" loop for incorrect input until correct input
-    do
-    {
+    do {
         titleScreen(timesUsed);
         cout << "User Choice: ";
 
         // If the user input isn't a number
-        while (!(cin >> userChoice))
-        {
+        while (!(cin >> userChoice)) {
             system("cls");
             titleScreen(timesUsed);
             cout << INVALID_ANSWER << endl;
@@ -102,8 +200,7 @@ int displayMenu(int& timesUsed)
         }
 
         // If the option is not valid, user has to reinput their option
-        if (!isValid(userChoice, min, max))
-        {
+        if (!isValid(userChoice, min, max)) {
             system("cls");
             cout << "Please choose from the options below." << endl << endl;
         }
@@ -113,8 +210,7 @@ int displayMenu(int& timesUsed)
 }
 
 // This sets up the Title Screen that is used for the DisplayMenu Function
- void titleScreen(int& timesUsed)
-{
+void titleScreen(int& timesUsed) {
     cout << "       Vigenere Cipher - CIS7 Final" << endl;
     cout << "               Team WAFFLES" << endl;
     timesUsed_msg(timesUsed);
@@ -122,19 +218,16 @@ int displayMenu(int& timesUsed)
 }
 
 // This Displays the Credits
- void credits(int& timesUsed)
-{
+void credits(int& timesUsed) {
     cout << " Vigenere Cipher Project Credits - Team WAFFLES" << endl;
     cout << "-------------------------------------------------" << endl;
-    cout << "   Xenon Garcia | Interface & Navigation Stuff" << endl;
-    cout << " Daelon Ruidsel |" << endl;
-    cout << "    Jose Orozco |" << endl;
+    cout << "   Xenon Garcia | Interface & QoL Stuff" << endl;
+    cout << " Daelon Ruidsel | Encrypt & Decrypt Functions" << endl;
     returnToMenu(timesUsed);
 }
 
 // This displays how many times a user has used this program
-void timesUsed_msg(int& timesUsed)
-{
+void timesUsed_msg(int& timesUsed) {
     if (timesUsed == 0) // Not yet used/just opened up the program
     {
         cout << "-------------------------------------------" << endl;
@@ -156,8 +249,7 @@ void timesUsed_msg(int& timesUsed)
 }
 
 // Validation Test
-bool isValid(int num, int min, int max)
-{
+bool isValid(int num, int min, int max) {
     if (num < min || num > max)
         return false;
     else
@@ -165,13 +257,11 @@ bool isValid(int num, int min, int max)
 }
 
 // Return To Menu Function
-char returnToMenu(int& timesUsed)
-{
+char returnToMenu(int& timesUsed) {
     char userChoice;
 
     // Setup a "do" loop for incorrect input until correct input
-    do
-    {
+    do {
         cout << endl;
         cout << "Want to go back to menu? (Y/N)" << endl;
         cout << "User Choice: ";
@@ -183,8 +273,7 @@ char returnToMenu(int& timesUsed)
             cout << endl << "thumbs up emoji" << endl;
 
         // If No
-        if (userChoice == 'N') 
-        {
+        if (userChoice == 'N') {
             system("cls");
             timesUsed_msg(timesUsed);
             cout << endl << QUIT_1 << endl;
@@ -193,8 +282,7 @@ char returnToMenu(int& timesUsed)
         }
 
         // If it's not YES (y) or NO (n)
-        if (userChoice != 'Y' && userChoice != 'N') 
-        {
+        if (userChoice != 'Y' && userChoice != 'N') {
             system("cls");
             cout << "Please make a proper choice." << endl;
         }
@@ -215,7 +303,7 @@ string encryptVigenere(const string& plain, const string& key) {
     for (size_t i = 0; i < plain.length(); ++i) {
         char plainChar = plain[i];
         char keyChar = key[i % keyLength];
-        char encryptedChar = (plainChar + keyChar) % 26 + 'A';  // Assuming uppercase letters
+        char encryptedChar = (plainChar + keyChar) % 26 + 'A'; // Assuming uppercase letters
 
         ciphered += encryptedChar;
     }
@@ -231,7 +319,7 @@ string decryptVigenere(const string& ciphered, const string& key) {
     for (size_t i = 0; i < ciphered.length(); ++i) {
         char cipheredChar = ciphered[i];
         char keyChar = key[i % keyLength];
-        char decryptedChar = (cipheredChar - keyChar + 26) % 26 + 'A';  // Assuming uppercase letters
+        char decryptedChar = (cipheredChar - keyChar + 26) % 26 + 'A'; // Assuming uppercase letters
 
         decrypted += decryptedChar;
     }
@@ -240,33 +328,9 @@ string decryptVigenere(const string& ciphered, const string& key) {
 }
 
 // DISPLAYS CIPHER + USES THE DECRYPT & ENCRYPT FUNCTION IN ONE FUNCTION
-void cipher(int userChoice) {
+string cipher(int userChoice, string plain, string key) {
     // Variables
-    string plain, key, result;
-
-    // This determines the title for the cipher option
-    if (userChoice == 1) {
-        cout << "Vigenere Cipher Project - Encrypting Text" << endl;
-        cout << "-------------------------------------------" << endl;
-    }
-    else if (userChoice == 2) {
-        cout << "Vigenere Cipher Project - Decrypting Text" << endl;
-        cout << "-------------------------------------------" << endl;
-    }
-
-    // Text Input
-    cout << "Input Text - Limit 50 Characters\nInput: ";
-    getline(cin, plain);
-    transform(plain.begin(), plain.end(), plain.begin(), ::toupper); // THIS CAPITALIZES THE LETTERS
-    cout << "\nKeyword - Limit 50 Characters\nInput: ";
-    getline(cin, key);
-    transform(key.begin(), key.end(), key.begin(), ::toupper); // THIS CAPITALIZES THE LETTERS
-
-    // Length Checking
-    if (plain.length() > 50)
-        cout << "Plain Text Input exceeded 50 characters. Please try again." << endl;
-    else if (key.length() > 50)
-        cout << "Keyword Input exceeded 50 characters. Please try again." << endl;
+    string result;
 
     // Encryption or Decryption
     if (userChoice == 1) {
@@ -277,26 +341,41 @@ void cipher(int userChoice) {
     else if (userChoice == 2) {
         cout << "\nDECRYPTING!!" << endl;
         // Call the function for decryption
-        result = decryptVigenere(result, key);  // Use 'result' instead of 'plain' in decryption
+        result = decryptVigenere(plain, key);
     }
 
     // Output
     cout << "===========================================" << endl;
     cout << "Your plain text was: \"" << plain << "\"" << endl;
     cout << "Your keyword was: \"" << key << "\"" << endl;
-    cout << "Your ciphered text: \"" << result << "\"" << endl;  // Use 'result' here
+    cout << "Your ciphered text: \"" << result << "\"" << endl; // Use 'result' here
     cout << "===========================================" << endl;
+    return result;
 }
 
 ////////////////
 // misc funcs //
 ////////////////
 
+// This checks the length of the string for input
+bool lengthCheck(string plain, string key) {
+    // Length Checking
+    if (plain.length() > 50) {
+        cout << "\nPlain Text Input exceeded 50 characters. Please try again." << endl;
+        system("pause");
+        return true;
+    }
+    else if (key.length() > 50) {
+        cout << "\nKeyword Input exceeded 50 characters. Please try again." << endl;
+        system("pause");
+        return true;
+    }
+}
+
 // Just to reduce like a couple of lines LOL
 // This clears the cin input
 // As well as ignoring any previous cin inputs
-static void cinStuff()
-{
+static void cinStuff() {
     cin.clear();
     cin.ignore();
 }
