@@ -33,7 +33,7 @@ how we approached this program should go here
    2) Type in the keyword
    3) Output displays in the following order: Plain Text, Keyword, Ciphered Text
 3) If you would like to decrypt, type 2 then press enter:
-  1) Text appears "Would you like to use previous input?"
+   1) Text appears "Would you like to use previous input?"
      - If you haven't already encrypted something, it'll ask you to encrypt something first
      - If you don't want to use previous input, it'll ask you to input something
          - Steps are like encrypting so no need to repeat
