@@ -61,12 +61,12 @@ int main() {
             cout << "-------------------------------------------" << endl;
 
             // Text Input
-            cout << "Input Text - Limit 50 Characters\nInput: ";
+            cout << "Input Text - Limit 50 Characters\nInput (No Spaces): ";
             getline(cin, plain);
             transform(plain.begin(), plain.end(), plain.begin(), ::toupper); // THIS CAPITALIZES THE LETTERS
 
             // Key Input
-            cout << "\nKeyword - Limit 50 Characters\nInput: ";
+            cout << "\nKeyword - Limit 50 Characters\nInput (No Spaces): ";
             getline(cin, key);
             transform(key.begin(), key.end(), key.begin(), ::toupper); // THIS CAPITALIZES THE LETTERS
 
@@ -121,12 +121,12 @@ int main() {
                     cinStuff();
 
                     // Text Input
-                    cout << "\nInput Text - Limit 50 Characters\nInput: ";
+                    cout << "\nInput Text - Limit 50 Characters\nInput (No Spaces): ";
                     getline(cin, plain);
                     transform(plain.begin(), plain.end(), plain.begin(), ::toupper); // THIS CAPITALIZES THE LETTERS
 
                     // Key Input
-                    cout << "\nKeyword - Limit 50 Characters\nInput: ";
+                    cout << "\nKeyword - Limit 50 Characters\nInput (No Spaces): ";
                     getline(cin, key);
                     transform(key.begin(), key.end(), key.begin(), ::toupper); // THIS CAPITALIZES THE LETTERS
 
@@ -149,7 +149,7 @@ int main() {
             // Output
             if (!(plain.empty() || key.empty())) {
                 result = cipher(userChoice, plain, key);
-                cout << "Returning after this resets everything!" << endl;
+                cout << "Returning after this resets all inputs + result!" << endl;
                 returnToMenu(timesUsed);
 
                 // Reset Everything
