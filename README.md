@@ -83,6 +83,6 @@ If you would like to decrypt, type 2 then press enter: <br />
 If you want to see the credits, type 3 then press enter. <br />
 If you would like to stop using the program, type 4 then press enter. <br />
 
-**In all instances, it would ask you if you would like to return to the menu,**
+**In all instances (besides the last), it would ask you if you would like to return to the menu,**
    - If yes, you'll return to the menu
    - If no, program will end
