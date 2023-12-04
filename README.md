@@ -1,5 +1,5 @@
 Date Published: 11/24/2023 <br />
-Last Updated: 12/5/2023 - 5:56 AM
+Last Updated: 12/5/2023 - 8:36 PM
 # Case 3: Vigenere Cipher Decryption
 Vigenere Cipher is a method of encrypting alphabetic text. It uses a simple form of polyalphabetic
 substitution. A polyalphabetic cipher is any cipher based on substitution, using multiple substitution
@@ -41,6 +41,7 @@ how we approached this program should go here
       - Once decryption is done, once prompted to exit, everything will reset
 - If you want to see the credits, type 3 then press enter
 - If you would like to stop using the program, type 4 then press enter
+
 
 - **In all instances, it would ask you if you would like to return to the menu,**
    - If yes, you'll return to the menu
