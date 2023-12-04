@@ -38,9 +38,10 @@ how we approached this program should go here
            - (If Y) If you have encrypted something already, it'll use your previous input
       - (If N) If you don't want to use previous input, it'll ask you to input something
          - Steps are like encrypting so no need to repeat
+      - Once decryption is done, once prompted to exit, everything will reset
 - If you want to see the credits, type 3 then press enter
 - If you would like to stop using the program, type 4 then press enter
 
-**In all instances, it would ask you if you would like to return to the menu,**
-- If yes, you'll return to the menu
-- If no, program will end
+- **In all instances, it would ask you if you would like to return to the menu,**
+   - If yes, you'll return to the menu
+   - If no, program will end
