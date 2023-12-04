@@ -27,7 +27,8 @@ decrypts a message from the user.
 how we approached this program should go here
 
 ## How To Use
-After running the program, you're greeted with 4 options (in order): Encrypt, Decrypt, Credits, and Quit <br />
+After running the program, you're greeted with 4 options (in order): Encrypt, Decrypt, Credits, and Quit. <br />
+
 If you would like to encrypt, type 1 then press enter: <br />
 1) Type in what word you would like to encrypt (no spaces)
 2) Type in the keyword (Also no spaces)
